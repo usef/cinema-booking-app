@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vendor_app/Palette.dart';
+import 'package:vendor_app/models/Movie.dart';
 
 class AllMoviesScreen extends StatefulWidget {
   AllMoviesScreen({Key key, this.title}) : super(key: key);
@@ -10,6 +11,33 @@ class AllMoviesScreen extends StatefulWidget {
 }
 
 class _AllMoviesScreenState extends State<AllMoviesScreen> {
+  List<Movie> movies = [
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+    Movie("test", "description"),
+    Movie("test2", "description2"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,33 +48,30 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
           color: Palette.secondaryColor,
         ),
       ),
-      body: ListView(
+      body: Column(
         children: <Widget>[
           Card(
             child: ListTile(
               title: Text('All Movies'),
             ),
           ),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
-          movieContainer(),
+          new Expanded(
+            child: new ListView.builder(
+              itemCount: movies == null ? 0 : movies.length,
+              itemBuilder: (context, i) {
+                return new FlatButton(
+                  onPressed: null,
+                  child: new MovieCell(movies, i, context),
+                  padding: EdgeInsets.all(0.0),
+                  color: Palette.secondaryColor,
+                );
+              },
+            ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Palette.mainColor,
+        backgroundColor: Palette.amber,
         foregroundColor: Palette.secondaryColor,
         onPressed: () {
           // Respond to button press
@@ -57,63 +82,10 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
     );
   }
 
-  Container movieContainer() {
-    return Container(
-      height: 50,
-      color: Colors.amber[600],
-      child: Row(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(15),
-            child: Text("Number of seats"),
-          ),
-          Container(
-            padding: EdgeInsets.all(15),
-            child: Text("Movie Name"),
-          ),
-          Material(
-            color: Palette.mainColor,
-            child: Center(
-              child: IconButton(
-                icon: Icon(Icons.edit),
-                color: Palette.secondaryColor,
-                onPressed: () {
-                  showMovieDetails();
-                },
-              ),
-            ),
-          ),
-          Material(
-            color: Palette.mainColor,
-            child: Center(
-              child: IconButton(
-                icon: Icon(Icons.delete),
-                color: Palette.secondaryColor,
-                onPressed: () {
-                  deleteMovie();
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   void addNewMovie() {
     // TODO:  Switch to AddMovieScreen
     print("Calling addNewMovie..");
     Navigator.pushNamed(context, '/AddMovieScreen');
-  }
-
-  void deleteMovie() {
-    //  TODO: Implement delete movie function
-    print("Calling deleteMovie..");
-  }
-
-  void showMovieDetails() {
-    //  TODO: Switch to MovieDetailsScreen
-    print("Calling showMovieDetails..");
-    Navigator.pushNamed(context, '/MovieDetailsScreen');
   }
 }
