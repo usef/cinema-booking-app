@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vendor_app/Palette.dart';
 import 'package:intl/intl.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class AddMovieScreen extends StatefulWidget {
   @override
@@ -12,6 +15,8 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
 
   DateTime _datePicked = DateTime.now();
   TimeOfDay _timePicked = TimeOfDay.now();
+  File _image;
+  final picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +111,23 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                   ),
                 ],
               ),
+              Container(
+                  height: 200,
+                  width: 200,
+                  child: _image == null
+                      ? Text(
+                          "no image selected",
+                          style: TextStyle(fontSize: 20),
+                        )
+                      : Image.file(_image)),
+              ElevatedButton(
+                child: Text("camera"),
+                onPressed: getImageByCamera,
+              ),
+              ElevatedButton(
+                child: Text("gallery"),
+                onPressed: getImageByGallery,
+              ),
               // the next widget contains submit button and action
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -122,6 +144,31 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
             ],
           )),
     );
+  }
+
+  Future getImageByCamera() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+// need to test gallery function
+  Future getImageByGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 }
 
