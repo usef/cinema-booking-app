@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:vendor_app/Palette.dart';
 import 'package:vendor_app/models/Seats.dart';
 
+const String MoviePic = 'https://i.ytimg.com/vi/MJuFdpVCcsY/movieposter_en.jpg';
+
 class MovieDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,8 +20,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   width: double.infinity,
                   child: Image(
                     fit: BoxFit.fill,
-                    image: NetworkImage(
-                        'https://i.ytimg.com/vi/MJuFdpVCcsY/movieposter_en.jpg'),
+                    image: NetworkImage(MoviePic),
                   ),
                 ),
                 Container(

@@ -7,36 +7,35 @@ class Seats extends StatefulWidget {
 
 class _SeatsState extends State<Seats> {
   List<IconButton> seats = [];
+  List<int> booked = [4, 5, 7, 8];
   Void SeateMaker() {
-    Key k = UniqueKey();
-    seats.add(IconButton(
-      key: k,
-      icon: Icon(Icons.amp_stories),
-      padding: EdgeInsets.all(0),
-      color: Colors.white,
-      onPressed: () {
-        onPress(k);
-      },
-    ));
-  }
-
-  void init_Seats() {
-    if (seats.isEmpty) {
-      for (int x = 0; x < 47; x++) {
-        SeateMaker();
+    setState(() {
+      if (seats.isNotEmpty) {
+        seats.clear();
       }
-    }
+      for (int x = 0; x < 47; x++) {
+        Color colors = Colors.white;
+        if (booked.contains(x)) {
+          colors = Colors.red;
+        }
+        seats.add(IconButton(
+          icon: Icon(Icons.amp_stories),
+          padding: EdgeInsets.all(0),
+          color: colors,
+          onPressed: () {},
+        ));
+      }
+    });
   }
 
-  void onPress(Key id) {
-    print('pressed $id');
-  }
-
-  bool _test = false;
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      booked.add(43);
+    });
+    SeateMaker();
     int h = 0;
-    init_Seats();
+    print(seats[40]);
     print(seats.length);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
