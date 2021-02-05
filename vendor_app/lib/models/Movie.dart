@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vendor_app/Palette.dart';
 
 class Movie {
   String title;
@@ -16,42 +15,57 @@ class MovieCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      color: Palette.amber,
+    return Card(
+      color: Colors.grey[500],
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(15),
-            child: Text("Number of seats"),
+            width: 80,
+            child: Image(
+              fit: BoxFit.fill,
+              image: NetworkImage(
+                  'https://i.ytimg.com/vi/MJuFdpVCcsY/movieposter_en.jpg'),
+            ),
           ),
           Container(
             padding: EdgeInsets.all(15),
-            child: Text(movies[i].title),
-          ),
-          Spacer(),
-          Material(
-            color: Palette.mainColor,
-            child: Center(
-              child: IconButton(
-                icon: Icon(Icons.edit),
-                color: Palette.secondaryColor,
-                onPressed: () {
-                  showMovieDetails();
-                },
-              ),
+            child: Text(
+              movies[i].title,
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          Material(
-            color: Palette.mainColor,
-            child: Center(
-              child: IconButton(
-                icon: Icon(Icons.delete),
-                color: Palette.secondaryColor,
-                onPressed: () {
-                  deleteMovie();
-                },
-              ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              children: [
+                Material(
+                  borderRadius:
+                      BorderRadius.horizontal(left: Radius.circular(50)),
+                  color: Colors.red,
+                  child: Center(
+                    child: IconButton(
+                      icon: Icon(Icons.edit),
+                      color: Colors.white,
+                      onPressed: () {
+                        showMovieDetails();
+                      },
+                    ),
+                  ),
+                ),
+                Material(
+                  color: Colors.red,
+                  child: Center(
+                    child: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Colors.white,
+                      onPressed: () {
+                        deleteMovie();
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
