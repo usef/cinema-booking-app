@@ -13,6 +13,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[800],
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
@@ -64,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
               title: 'Log in',
               colour: Colors.red[400],
               onPressed: () {
-                print(email + password);
+                Navigator.pushNamed(context, '/AllMoviesScreen');
               },
             ),
           ],

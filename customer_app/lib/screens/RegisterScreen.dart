@@ -14,6 +14,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[800],
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
@@ -75,7 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               title: 'Register',
               colour: Colors.red[400],
               onPressed: () {
-                print(name + email + password);
+                Navigator.pushNamed(context, '/AllMoviesScreen');
               },
             ),
           ],
