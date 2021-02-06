@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vendor_app/models/Movie.dart';
+import 'package:vendor_app/models/db.dart';
 
 class AllMoviesScreen extends StatefulWidget {
   AllMoviesScreen({Key key, this.title}) : super(key: key);
@@ -10,6 +11,8 @@ class AllMoviesScreen extends StatefulWidget {
 }
 
 class _AllMoviesScreenState extends State<AllMoviesScreen> {
+  final db = new DB();
+
   List<Movie> movies = [
     Movie("movies", "description"),
     Movie("movies1", "description2"),
@@ -74,7 +77,9 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
         foregroundColor: Colors.red,
         onPressed: () {
           // Respond to button press
-          addNewMovie();
+          //addNewMovie();
+
+          db.addMovie(des: "testcx", img: "text cx img ", name: "text cx app");
         },
         child: Icon(Icons.add),
       ),
