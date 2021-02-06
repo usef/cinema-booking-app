@@ -48,9 +48,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               colour: Colors.red,
               onPressed: () {
                 //Navigator.pushNamed(context, '/LoginScreen');
-                // db.addMovie(
-                //     des: "testcx", img: "text cx img ", name: "text cx app");
-                db.deleteMovie("text cx app");
+                db.addMovie(
+                    description: "test",
+                    img: "text cx img ",
+                    movieName: "text ",
+                    time: "today20");
+                //db.deleteMovie("text cx app");
+                db.book(
+                  movieName: "text cx app",
+                  seatId: 2,
+                  userId: 21,
+                );
+
+                db.getMovies();
               },
             ),
             RoundedButton(
