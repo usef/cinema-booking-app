@@ -1,3 +1,4 @@
+import 'package:customer_app/models/db.dart';
 import 'package:flutter/material.dart';
 import 'package:customer_app/models/RoundedButton.dart';
 
@@ -7,6 +8,7 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  final db = new DB();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +47,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               title: 'Log in',
               colour: Colors.red,
               onPressed: () {
-                Navigator.pushNamed(context, '/LoginScreen');
+                //Navigator.pushNamed(context, '/LoginScreen');
+                // db.addMovie(
+                //     des: "testcx", img: "text cx img ", name: "text cx app");
+                db.deleteMovie("text cx app");
               },
             ),
             RoundedButton(
