@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vendor_app/Palette.dart';
 import 'package:vendor_app/models/Movie.dart';
 
 class AllMoviesScreen extends StatefulWidget {
@@ -12,49 +11,49 @@ class AllMoviesScreen extends StatefulWidget {
 
 class _AllMoviesScreenState extends State<AllMoviesScreen> {
   List<Movie> movies = [
-    Movie("test", "description"),
-    Movie("test2", "description2"),
-    Movie("test", "description"),
-    Movie("test2", "description2"),
-    Movie("test", "description"),
-    Movie("test2", "description2"),
-    Movie("test", "description"),
-    Movie("test2", "description2"),
-    Movie("test", "description"),
-    Movie("test2", "description2"),
-    Movie("test", "description"),
-    Movie("test2", "description2"),
-    Movie("test", "description"),
-    Movie("test2", "description2"),
-    Movie("test", "description"),
-    Movie("test2", "description2"),
-    Movie("test", "description"),
-    Movie("test2", "description2"),
-    Movie("test", "description"),
-    Movie("test2", "description2"),
-    Movie("test", "description"),
-    Movie("test2", "description2"),
-    Movie("test", "description"),
-    Movie("test2", "description2"),
+    Movie("movies", "description"),
+    Movie("movies1", "description2"),
+    Movie("movies2", "description"),
+    Movie("movies3", "description2"),
+    Movie("movies4", "description"),
+    Movie("movies5", "description2"),
+    Movie("movies6", "description"),
+    Movie("movies7", "description2"),
+    Movie("movies8", "description"),
+    Movie("movies9", "description2"),
+    Movie("movies10", "description"),
+    Movie("movies11", "description2"),
+    Movie("movies12", "description"),
+    Movie("movies13", "description2"),
+    Movie("movies14", "description"),
+    Movie("movies15", "description2"),
+    Movie("movies16", "description"),
+    Movie("movies17", "description2"),
+    Movie("movies19", "description"),
+    Movie("movies20", "description2"),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[800],
       appBar: AppBar(
-        title: Text(widget.title),
-        leading: new Icon(
-          Icons.arrow_back,
-          color: Palette.secondaryColor,
+        backgroundColor: Colors.grey[800],
+        title: Text(
+          widget.title,
+          textAlign: TextAlign.center,
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.red,
+          onPressed: () {
+            // Navigator.pop(context);
+          },
         ),
       ),
       body: Column(
         children: <Widget>[
-          Card(
-            child: ListTile(
-              title: Text('All Movies'),
-            ),
-          ),
           new Expanded(
             child: new ListView.builder(
               itemCount: movies == null ? 0 : movies.length,
@@ -63,7 +62,7 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
                   onPressed: null,
                   child: new MovieCell(movies, i, context),
                   padding: EdgeInsets.all(0.0),
-                  color: Palette.secondaryColor,
+                  color: Colors.white,
                 );
               },
             ),
@@ -71,8 +70,8 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Palette.amber,
-        foregroundColor: Palette.secondaryColor,
+        backgroundColor: Colors.grey[800],
+        foregroundColor: Colors.red,
         onPressed: () {
           // Respond to button press
           addNewMovie();
@@ -81,7 +80,6 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
       ),
     );
   }
-
 
   void addNewMovie() {
     // TODO:  Switch to AddMovieScreen
