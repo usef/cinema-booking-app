@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:customer_app/models/Movie.dart';
 import 'package:flutter/cupertino.dart';
 
 class DB {
@@ -42,14 +43,23 @@ class DB {
 
   // getMovie( movieID )
 
-  Map getMovies() {
-    final result = {};
+  List<Movie> getMovies() {
+    final List<Movie> result = [];
     movies.getDocuments().then((QuerySnapshot querySnapshot) => {
           querySnapshot.documents.forEach((doc) => {
-                result.addAll({"movieName": doc["movieName"]})
+                // print(doc.data)
+                // if(doc.data != null)
+                result.add(
+                    new Movie(
+                        doc.data["movieName"],
+                        doc.data["description"],
+                        doc.data["img"]
+                    )
+                )
               })
         });
-    print(result.keys);
+    print(result);
+    return result;
   }
 
   // to do user part

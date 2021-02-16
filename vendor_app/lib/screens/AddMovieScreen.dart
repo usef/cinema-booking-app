@@ -25,8 +25,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
         title: Text(" add movie "),
         centerTitle: true,
       ),
-      body: Expanded(
-        child: Form(
+      body: Form(
             key: _formKey,
             child: Column(
               children: <Widget>[
@@ -131,21 +130,23 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                   onPressed: getImageByGallery,
                 ),
                 // the next widget contains submit button and action
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Validate will return true if the form is valid, or false if
-                        // the form is invalid.
-                        if (_formKey.currentState.validate()) {
-                          // Process data.
-                        }
-                      },
-                      child: Text('Submit'),
-                    )),
+                Expanded(
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Validate will return true if the form is valid, or false if
+                          // the form is invalid.
+                          if (_formKey.currentState.validate()) {
+                            // Process data.
+                          }
+                        },
+                        child: Text('Submit'),
+                      )),
+                ),
               ],
-            )),
-      ),
+            ),
+        ),
     );
   }
 

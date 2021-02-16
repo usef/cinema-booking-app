@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vendor_app/models/Movie.dart';
-import 'package:vendor_app/models/db.dart';
+import 'package:common_packages/models/Movie.dart';
+import 'package:common_packages/models/db.dart';
 
 class AllMoviesScreen extends StatefulWidget {
   AllMoviesScreen({Key key, this.title}) : super(key: key);
@@ -12,29 +12,30 @@ class AllMoviesScreen extends StatefulWidget {
 
 class _AllMoviesScreenState extends State<AllMoviesScreen> {
   final db = new DB();
+  List<Movie> movies = new DB().getMovies();
 
-  List<Movie> movies = [
-    Movie("movies", "description"),
-    Movie("movies1", "description2"),
-    Movie("movies2", "description"),
-    Movie("movies3", "description2"),
-    Movie("movies4", "description"),
-    Movie("movies5", "description2"),
-    Movie("movies6", "description"),
-    Movie("movies7", "description2"),
-    Movie("movies8", "description"),
-    Movie("movies9", "description2"),
-    Movie("movies10", "description"),
-    Movie("movies11", "description2"),
-    Movie("movies12", "description"),
-    Movie("movies13", "description2"),
-    Movie("movies14", "description"),
-    Movie("movies15", "description2"),
-    Movie("movies16", "description"),
-    Movie("movies17", "description2"),
-    Movie("movies19", "description"),
-    Movie("movies20", "description2"),
-  ];
+  // List<Movie> movies = [
+  //   Movie("movies", "description", "pic"),
+  //   Movie("movies1", "description2", "pic"),
+  //   Movie("movies2", "description", "pic"),
+  //   Movie("movies3", "description2", "pic"),
+  //   Movie("movies4", "description", "pic"),
+  //   Movie("movies5", "description2", "pic"),
+  //   Movie("movies6", "description", "pic"),
+  //   Movie("movies7", "description2", "pic"),
+  //   Movie("movies8", "description", "pic"),
+  //   Movie("movies9", "description2", "pic"),
+  //   Movie("movies10", "description", "pic"),
+  //   Movie("movies11", "description2", "pic"),
+  //   Movie("movies12", "description", "pic"),
+  //   Movie("movies13", "description2", "pic"),
+  //   Movie("movies14", "description", "pic"),
+  //   Movie("movies15", "description2", "pic"),
+  //   Movie("movies16", "description", "pic"),
+  //   Movie("movies17", "description2", "pic"),
+  //   Movie("movies19", "description", "pic"),
+  //   Movie("movies20", "description2", "pic"),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +78,7 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
         foregroundColor: Colors.red,
         onPressed: () {
           // Respond to button press
-          //addNewMovie();
-
-          db.addMovie(des: "testcx", img: "text cx img ", name: "text cx app");
+          addNewMovie();
         },
         child: Icon(Icons.add),
       ),
@@ -89,6 +88,7 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
   void addNewMovie() {
     // TODO:  Switch to AddMovieScreen
     print("Calling addNewMovie..");
+    db.addMovie(description: "testcx", img: "text cx img ", movieName: "text cx app");
     Navigator.pushNamed(context, '/AddMovieScreen');
   }
 }
