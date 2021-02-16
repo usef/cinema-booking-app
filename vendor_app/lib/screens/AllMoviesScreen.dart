@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vendor_app/models/Movie.dart';
+import 'package:common_packages/models/Movie.dart';
+import 'package:common_packages/models/db.dart';
 
 class AllMoviesScreen extends StatefulWidget {
   AllMoviesScreen({Key key, this.title}) : super(key: key);
@@ -10,28 +11,7 @@ class AllMoviesScreen extends StatefulWidget {
 }
 
 class _AllMoviesScreenState extends State<AllMoviesScreen> {
-  List<Movie> movies = [
-    Movie("movies", "description"),
-    Movie("movies1", "description2"),
-    Movie("movies2", "description"),
-    Movie("movies3", "description2"),
-    Movie("movies4", "description"),
-    Movie("movies5", "description2"),
-    Movie("movies6", "description"),
-    Movie("movies7", "description2"),
-    Movie("movies8", "description"),
-    Movie("movies9", "description2"),
-    Movie("movies10", "description"),
-    Movie("movies11", "description2"),
-    Movie("movies12", "description"),
-    Movie("movies13", "description2"),
-    Movie("movies14", "description"),
-    Movie("movies15", "description2"),
-    Movie("movies16", "description"),
-    Movie("movies17", "description2"),
-    Movie("movies19", "description"),
-    Movie("movies20", "description2"),
-  ];
+  final db = new DB();
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +35,28 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
       body: Column(
         children: <Widget>[
           new Expanded(
-            child: new ListView.builder(
-              itemCount: movies == null ? 0 : movies.length,
-              itemBuilder: (context, i) {
-                return new FlatButton(
-                  onPressed: null,
-                  child: new MovieCell(movies, i, context),
-                  padding: EdgeInsets.all(0.0),
-                  color: Colors.white,
-                );
-              },
-            ),
+              child: FutureBuilder<List<Movie>>(
+                  future: db.getMovies(),
+                  builder: (BuildContext context, AsyncSnapshot<List<Movie>> snapshot){
+                    if( snapshot.connectionState == ConnectionState.waiting){
+                      return Center(child: Text('Please wait its loading...'));
+                    }else{
+                      if (snapshot.hasError)
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      else
+                        return new ListView.builder(
+                            itemCount: snapshot.data == null ? 0 : snapshot.data.length,
+                            itemBuilder: (context, i) {
+                              return new FlatButton(
+                                onPressed: null,
+                                child: new MovieCell(snapshot.data, i, context),
+                                padding: EdgeInsets.all(0.0),
+                                color: Colors.white,
+                              );
+                            });
+                    }
+                  },
+              ),
           ),
         ],
       ),
@@ -84,6 +75,7 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
   void addNewMovie() {
     // TODO:  Switch to AddMovieScreen
     print("Calling addNewMovie..");
+    db.addMovie(description: "testcx", img: "text cx img ", movieName: "text cx app");
     Navigator.pushNamed(context, '/AddMovieScreen');
   }
 }
