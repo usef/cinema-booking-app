@@ -43,12 +43,10 @@ class DB {
 
   // getMovie( movieID )
 
-  List<Movie> getMovies() {
+  Future<List<Movie>> getMovies() async {
     final List<Movie> result = [];
-    movies.getDocuments().then((QuerySnapshot querySnapshot) => {
+    final res = await movies.getDocuments().then((QuerySnapshot querySnapshot) => {
           querySnapshot.documents.forEach((doc) => {
-                // print(doc.data)
-                // if(doc.data != null)
                 result.add(
                     new Movie(
                         doc.data["movieName"],
@@ -58,7 +56,6 @@ class DB {
                 )
               })
         });
-    print(result);
     return result;
   }
 

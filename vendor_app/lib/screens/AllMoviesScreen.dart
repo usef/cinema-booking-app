@@ -12,30 +12,6 @@ class AllMoviesScreen extends StatefulWidget {
 
 class _AllMoviesScreenState extends State<AllMoviesScreen> {
   final db = new DB();
-  List<Movie> movies = new DB().getMovies();
-
-  // List<Movie> movies = [
-  //   Movie("movies", "description", "pic"),
-  //   Movie("movies1", "description2", "pic"),
-  //   Movie("movies2", "description", "pic"),
-  //   Movie("movies3", "description2", "pic"),
-  //   Movie("movies4", "description", "pic"),
-  //   Movie("movies5", "description2", "pic"),
-  //   Movie("movies6", "description", "pic"),
-  //   Movie("movies7", "description2", "pic"),
-  //   Movie("movies8", "description", "pic"),
-  //   Movie("movies9", "description2", "pic"),
-  //   Movie("movies10", "description", "pic"),
-  //   Movie("movies11", "description2", "pic"),
-  //   Movie("movies12", "description", "pic"),
-  //   Movie("movies13", "description2", "pic"),
-  //   Movie("movies14", "description", "pic"),
-  //   Movie("movies15", "description2", "pic"),
-  //   Movie("movies16", "description", "pic"),
-  //   Movie("movies17", "description2", "pic"),
-  //   Movie("movies19", "description", "pic"),
-  //   Movie("movies20", "description2", "pic"),
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -59,17 +35,28 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
       body: Column(
         children: <Widget>[
           new Expanded(
-            child: new ListView.builder(
-              itemCount: movies == null ? 0 : movies.length,
-              itemBuilder: (context, i) {
-                return new FlatButton(
-                  onPressed: null,
-                  child: new MovieCell(movies, i, context),
-                  padding: EdgeInsets.all(0.0),
-                  color: Colors.white,
-                );
-              },
-            ),
+              child: FutureBuilder<List<Movie>>(
+                  future: db.getMovies(),
+                  builder: (BuildContext context, AsyncSnapshot<List<Movie>> snapshot){
+                    if( snapshot.connectionState == ConnectionState.waiting){
+                      return Center(child: Text('Please wait its loading...'));
+                    }else{
+                      if (snapshot.hasError)
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      else
+                        return new ListView.builder(
+                            itemCount: snapshot.data == null ? 0 : snapshot.data.length,
+                            itemBuilder: (context, i) {
+                              return new FlatButton(
+                                onPressed: null,
+                                child: new MovieCell(snapshot.data, i, context),
+                                padding: EdgeInsets.all(0.0),
+                                color: Colors.white,
+                              );
+                            });
+                    }
+                  },
+              ),
           ),
         ],
       ),
