@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:customer_app/models/Movie.dart';
+import 'package:common_packages/models/Movie.dart';
 import 'package:flutter/cupertino.dart';
 
 class DB {
