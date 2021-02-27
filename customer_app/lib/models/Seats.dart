@@ -74,7 +74,7 @@ class _SeatsState extends State<Seats> {
     userSeat = widget.userSeat;
     SeateMaker();
     int h = 0;
-    String avSeats = (47 - booked.length).toString();
+    String avSeats = (47 - (booked.length + userSeat.length)).toString();
     return Column(
       children: [
         Card(
