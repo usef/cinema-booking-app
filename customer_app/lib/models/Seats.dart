@@ -1,29 +1,14 @@
 import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:common_packages/models/db.dart';
-import 'package:flutter/services.dart';
 
 class Seats extends StatefulWidget {
-  Seats(
-      {@required this.booked,
-      @required this.userSeat,
-      @required this.userId,
-      @required this.movieName});
-  final List<int> booked;
-  final List<int> userSeat;
-  final int userId;
-  final String movieName;
   _SeatsState createState() => _SeatsState();
 }
 
 class _SeatsState extends State<Seats> {
-  final db = new DB();
   List<IconButton> seats = [];
-  List<int> booked = [];
-  List<int> userSeat = [];
-  List<int> newSeat = [];
-  int userId;
-  String movie;
+  List<int> booked = [4, 5, 7, 8];
+  List<int> waiting = [];
   Void SeateMaker() {
     setState(() {
       if (seats.isNotEmpty) {
@@ -33,10 +18,8 @@ class _SeatsState extends State<Seats> {
         Color colors = Colors.white;
         if (booked.contains(x)) {
           colors = Colors.red;
-        } else if (userSeat.contains(x)) {
+        } else if (waiting.contains(x)) {
           colors = Colors.green;
-        } else if (newSeat.contains(x)) {
-          colors = Colors.blue;
         }
         seats.add(IconButton(
           icon: Icon(Icons.amp_stories),
@@ -45,10 +28,10 @@ class _SeatsState extends State<Seats> {
           onPressed: () {
             if (!booked.contains(x)) {
               setState(() {
-                if (newSeat.contains(x)) {
-                  newSeat.remove(x);
+                if (waiting.contains(x)) {
+                  waiting.remove(x);
                 } else {
-                  newSeat.add(x);
+                  waiting.add(x);
                 }
 
                 print(x);
@@ -61,37 +44,16 @@ class _SeatsState extends State<Seats> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    userId = widget.userId;
-    movie = widget.movieName;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    booked = widget.booked;
-    userSeat = widget.userSeat;
+    setState(() {
+      booked.add(43);
+    });
     SeateMaker();
+
     int h = 0;
-    String avSeats = (47 - (booked.length + userSeat.length)).toString();
+    print(seats.length);
     return Column(
       children: [
-        Card(
-          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-          child: ListTile(
-            title: Text(
-              'This Is The Screen',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(
-              '$avSeats /47',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -111,15 +73,15 @@ class _SeatsState extends State<Seats> {
             padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
             child: FlatButton(
               child: Text(
-                'Book The Seats',
+                'Book Movie',
                 style: TextStyle(fontSize: 20.0),
               ),
               color: Colors.red,
               textColor: Colors.white,
               onPressed: () {
                 setState(() {
-                  for (var x in newSeat) {
-                    db.book(seatId: x, userId: userId, movieName: movie);
+                  for (var s in waiting) {
+                    booked.add(s);
                   }
                 });
               },
