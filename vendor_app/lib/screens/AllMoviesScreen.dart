@@ -41,7 +41,7 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
               builder:
                   (BuildContext context, AsyncSnapshot<List<Movie>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: Text('Please wait its loading...'));
+                  return Center(child: CircularProgressIndicator());
                 } else {
                   if (snapshot.hasError)
                     return Center(child: Text('Error: ${snapshot.error}'));

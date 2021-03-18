@@ -21,7 +21,6 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
 
   File _image;
 
-  Future _uploadedImageUrl;
   String _datePickedToString;
   String _timePickedToString;
 
@@ -79,22 +78,14 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                   padding: EdgeInsets.only(left: 15),
                   child: ElevatedButton(
                     child: Text("pick a date"),
-                    onPressed: () {
-                      showDatePicker(
+                    onPressed: () async {
+                      DateTime datePicked = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime(2020),
-                              lastDate: DateTime(2022))
-                          .then((datePicked) {
-                        setState(() {
-                          if (datePicked != null) {
-                            _datePicked = datePicked;
-                            _datePickedToString =
-                                new DateFormat.yMMMd().format(_datePicked);
-                            addedMovie.date = _datePickedToString;
-                          }
-                        });
-                      });
+                              lastDate: DateTime(2022));
+                      if (datePicked != null) _datePicked = datePicked;
+
                     },
                   ),
                 ),
@@ -113,19 +104,9 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                   margin: EdgeInsets.only(left: 15),
                   child: ElevatedButton(
                     child: Text("pick a TIME"),
-                    onPressed: () {
-                      showTimePicker(
-                              context: context, initialTime: TimeOfDay.now())
-                          .then((timePicked) {
-                        setState(() {
-                          if (timePicked != null) {
-                            _timePicked = timePicked;
-                            _timePickedToString = _timePicked.format(context);
-
-                            addedMovie.time = _timePickedToString;
-                          }
-                        });
-                      });
+                    onPressed: () async {
+                      TimeOfDay timePicked = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+                      if(timePicked != null) _timePicked = timePicked;
                     },
                   ),
                 ),
@@ -159,19 +140,23 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
               child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       // Validate will return true if the form is valid, or false if
                       // the form is invalid.
-                      print(addedMovie.title +
-                          addedMovie.description +
-                          _timePicked.format(context) +
-                          new DateFormat.yMMMd().format(_datePicked));
                       if (_formKey.currentState.validate()) {
                         // Process data.
+                        _timePickedToString = _timePicked.format(context);
+                        addedMovie.time = _timePickedToString;
+
+                        _datePickedToString = new DateFormat.yMMMd().format(_datePicked);
+                        addedMovie.date = _datePickedToString;
+
                         if (_image != null) {
-                          _uploadedImageUrl = uploadImage(_image)
-                              .then((res) => {addedMovie.pic = res});
-                          db.addMovie(addedMovie: addedMovie);
+                          String _uploadedImageUrl = await uploadImage(_image);
+                          addedMovie.pic = _uploadedImageUrl;
+                          bool added = await db.addMovie(addedMovie: addedMovie);
+                          if(added) Navigator.pop(context);
+                          else print("Error when adding movie");
                         }
                       }
                     },
@@ -211,7 +196,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
 }
 
 Future<String> uploadImage(var imageFile) async {
-  StorageReference ref = FirebaseStorage.instance.ref().child("photo.jpg");
+  StorageReference ref = FirebaseStorage.instance.ref().child("photo-${DateTime.now()}.jpg");
   StorageUploadTask uploadTask = ref.putFile(imageFile);
 
   var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
@@ -219,19 +204,3 @@ Future<String> uploadImage(var imageFile) async {
 
   return url;
 }
-
-//usef code
-// Container(
-//       child: Material(
-//         color: Palette.mainColor,
-//         child: Center(
-//           child: IconButton(
-//             icon: Icon(Icons.arrow_back),
-//             color: Palette.secondaryColor,
-//             onPressed: () {
-//               Navigator.pop(context);
-//             },
-//           ),
-//         ),
-//       ),
-//     );

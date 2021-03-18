@@ -148,6 +148,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   textColor: Colors.white,
                   onPressed: () {
                     db.deleteMovie(movieName: MovieDetail.title);
+                    Navigator.pop(context);
                   },
                 ),
               ),
