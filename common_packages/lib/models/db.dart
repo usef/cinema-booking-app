@@ -9,12 +9,13 @@ class DB {
   CollectionReference seates = Firestore.instance.collection('seats');
 
   void addMovie(
-      {String movieName, String description, String img, String time}) {
+      {String movieName, String description, String img, String time,String date}) {
     movies
         .document(movieName)
         .setData({
           'movieName': movieName,
           'time': time,
+          'date': date,
           'movieDescription': description,
           'img': img,
         })
@@ -46,18 +47,26 @@ class DB {
   Future<List<Movie>> getMovies() async {
     final List<Movie> result = [];
     final res = await movies.getDocuments().then((QuerySnapshot querySnapshot) => {
-          querySnapshot.documents.forEach((doc) => {
-                result.add(
-                    new Movie(
-                        doc.data["movieName"],
-                        doc.data["description"],
-                        doc.data["img"]
-                    )
-                )
-              })
-        });
+      querySnapshot.documents.forEach((doc) => {
+        result.add(
+            new Movie(
+              doc.data["movieName"],
+              doc.data["movieDescription"],
+              doc.data["img"],
+              doc.data["time"],
+              doc.data["date"]
+
+            )
+        )
+      })
+    });
     return result;
   }
+
+  Stream<QuerySnapshot> getSeats(id)  {
+    return  seates.where('movieName', isEqualTo: id).snapshots();
+  }
+// to do user part
 
   // to do user part
 }
