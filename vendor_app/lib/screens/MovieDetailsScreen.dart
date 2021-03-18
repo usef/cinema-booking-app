@@ -24,7 +24,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   width: double.infinity,
                   child: Image(
                     fit: BoxFit.fill,
-                    image: NetworkImage(MoviePic),
+                    image: NetworkImage(MovieDetail.pic),
                   ),
                 ),
                 Container(

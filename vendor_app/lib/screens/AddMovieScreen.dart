@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:common_packages/models/db.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AddMovieScreen extends StatefulWidget {
   @override
@@ -19,8 +20,11 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
   TimeOfDay _timePicked = TimeOfDay.now(); // time not string
 
   File _image;
+
+  Future _uploadedImageUrl;
   String _datePickedToString;
   String _timePickedToString;
+
   final picker = ImagePicker();
   final addedMovie = new Movie("", "", "", "", ""); // mmkn n4eelo
 
@@ -87,7 +91,6 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                             _datePicked = datePicked;
                             _datePickedToString =
                                 new DateFormat.yMMMd().format(_datePicked);
-
                             addedMovie.date = _datePickedToString;
                           }
                         });
@@ -97,7 +100,9 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 10),
-                  child: Text(_datePickedToString), // return date as a string
+                  child: Text(new DateFormat.yMMMd().format(_datePicked) != null
+                      ? new DateFormat.yMMMd().format(_datePicked)
+                      : "null date"), // return date as a string
                 ),
               ],
             ),
@@ -126,7 +131,9 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 10),
-                  child: Text(_timePickedToString), // return date as a string
+                  child: Text(_timePicked.format(context) != null
+                      ? _timePicked.format(context)
+                      : "null"), // return date as a string
                 ),
               ],
             ),
@@ -161,9 +168,11 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                           new DateFormat.yMMMd().format(_datePicked));
                       if (_formKey.currentState.validate()) {
                         // Process data.
-                        db.addMovie(addedMovie: addedMovie);
-
-                        print("done ya m3lm");
+                        if (_image != null) {
+                          _uploadedImageUrl = uploadImage(_image)
+                              .then((res) => {addedMovie.pic = res});
+                          db.addMovie(addedMovie: addedMovie);
+                        }
                       }
                     },
                     child: Text('Submit'),
@@ -199,6 +208,16 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
       }
     });
   }
+}
+
+Future<String> uploadImage(var imageFile) async {
+  StorageReference ref = FirebaseStorage.instance.ref().child("photo.jpg");
+  StorageUploadTask uploadTask = ref.putFile(imageFile);
+
+  var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
+  String url = dowurl.toString();
+
+  return url;
 }
 
 //usef code
