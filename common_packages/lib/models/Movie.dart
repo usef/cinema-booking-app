@@ -6,7 +6,7 @@ class Movie {
   String pic;
   String time;
   String date;
-  Movie(this.title, this.description, this.pic ,this.time, this.date);
+  Movie(this.title, this.description, this.pic, this.time, this.date);
 }
 
 class MovieCell extends StatelessWidget {
@@ -61,10 +61,6 @@ class MovieCell extends StatelessWidget {
   void showMovieDetails(dynamic movie) {
     //  TODO: Switch to MovieDetailsScreen
     print("Calling showMovieDetails..");
-    Navigator.pushNamed(
-        context,
-        '/MovieDetailsScreen',
-        arguments: movie
-    );
+    Navigator.pushNamed(context, '/MovieDetailsScreen', arguments: movie);
   }
 }

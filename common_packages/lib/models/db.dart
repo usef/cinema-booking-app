@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:common_packages/models/Movie.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 
 class DB {
   final Firestore firestore = Firestore.instance;
@@ -8,16 +9,15 @@ class DB {
   CollectionReference movies = Firestore.instance.collection('movies');
   CollectionReference seates = Firestore.instance.collection('seats');
 
-  void addMovie(
-      {String movieName, String description, String img, String time,String date}) {
+  void addMovie({Movie addedMovie}) {
     movies
-        .document(movieName)
+        .document(addedMovie.title)
         .setData({
-          'movieName': movieName,
-          'time': time,
-          'date': date,
-          'movieDescription': description,
-          'img': img,
+          'movieName': addedMovie.title,
+          'time': addedMovie.time,
+          'date': addedMovie.date,
+          'movieDescription': addedMovie.description,
+          'img': addedMovie.pic,
         })
         .then((value) => print("added"))
         .catchError((e) => print('failed cuz $e'));
@@ -46,25 +46,22 @@ class DB {
 
   Future<List<Movie>> getMovies() async {
     final List<Movie> result = [];
-    final res = await movies.getDocuments().then((QuerySnapshot querySnapshot) => {
-      querySnapshot.documents.forEach((doc) => {
-        result.add(
-            new Movie(
-              doc.data["movieName"],
-              doc.data["movieDescription"],
-              doc.data["img"],
-              doc.data["time"],
-              doc.data["date"]
-
-            )
-        )
-      })
-    });
+    final res =
+        await movies.getDocuments().then((QuerySnapshot querySnapshot) => {
+              querySnapshot.documents.forEach((doc) => {
+                    result.add(new Movie(
+                        doc.data["movieName"],
+                        doc.data["movieDescription"],
+                        doc.data["img"],
+                        doc.data["time"],
+                        doc.data["date"]))
+                  })
+            });
     return result;
   }
 
-  Stream<QuerySnapshot> getSeats(id)  {
-    return  seates.where('movieName', isEqualTo: id).snapshots();
+  Stream<QuerySnapshot> getSeats(id) {
+    return seates.where('movieName', isEqualTo: id).snapshots();
   }
 // to do user part
 
