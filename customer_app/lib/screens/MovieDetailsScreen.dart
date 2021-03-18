@@ -1,12 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:customer_app/models/Seats.dart';
+import 'package:common_packages/models/db.dart';
 
 const String MoviePic = 'https://i.ytimg.com/vi/MJuFdpVCcsY/movieposter_en.jpg';
 
 class MovieDetailsScreen extends StatelessWidget {
+  final db = new DB();
+  final UserId = 1;
   @override
   Widget build(BuildContext context) {
+    final dynamic MovieDetail = ModalRoute.of(context).settings.arguments;
     return SingleChildScrollView(
       child: Material(
         color: Colors.grey[900],
@@ -27,14 +32,14 @@ class MovieDetailsScreen extends StatelessWidget {
                     children: [
                       IconButton(
                         icon: Icon(Icons.arrow_back),
-                        color: Colors.red,
+                        color: Colors.white,
                         onPressed: () {
                           Navigator.pop(context);
                         },
                       ),
                       Expanded(
                         child: Text(
-                          'Movie Name',
+                          MovieDetail.title,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
@@ -52,7 +57,7 @@ class MovieDetailsScreen extends StatelessWidget {
             Container(
               margin: EdgeInsets.fromLTRB(10, 15, 10, 0),
               child: Text(
-                'MOvie discreption Example MOvie discreption Example MOvie discreption Example MOvie discreption Example  discreption Example MOvie discreption Example MOvie discreption Example MOvie discreption Example MOvie discreption Example  discreption Example',
+                MovieDetail.description,
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.white,
@@ -70,16 +75,22 @@ class MovieDetailsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Time Of Movie',
-                  style: TextStyle(
-                    color: Colors.white,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    'Movie Time',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-                Text(
-                  'Available Seats',
-                  style: TextStyle(
-                    color: Colors.white,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                    'Movie Date',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 )
               ],
@@ -92,7 +103,7 @@ class MovieDetailsScreen extends StatelessWidget {
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                   color: Colors.white,
                   child: Text(
-                    '20:20:20',
+                    MovieDetail.time.toString(),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -102,24 +113,38 @@ class MovieDetailsScreen extends StatelessWidget {
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                   color: Colors.white,
                   child: Text(
-                    '47/47',
+                    MovieDetail.date.toString(),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
             ),
-            Card(
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              child: ListTile(
-                title: Text(
-                  'This Is The Screen',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Seats(),
+            StreamBuilder<QuerySnapshot>(
+                stream: db.getSeats(MovieDetail.title),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.lightBlueAccent,
+                      ),
+                    );
+                  }
+                  final temp = snapshot.data.documents;
+                  List<int> booked = [];
+                  List<int> userSeats = [];
+                  for (var x in temp) {
+                    if (x.data['userId'] == UserId) {
+                      userSeats.add(x.data['seatId']);
+                    } else
+                      booked.add(x.data['seatId']);
+                  }
+                  return Seats(
+                      booked: booked,
+                      userSeat: userSeats,
+                      userId: UserId,
+                      movieName: MovieDetail.title);
+                }),
           ],
         ),
       ),
