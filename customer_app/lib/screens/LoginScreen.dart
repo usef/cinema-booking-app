@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:customer_app/models/RoundedButton.dart';
 import 'package:customer_app/models/CustTextfield.dart';
+import 'package:common_packages/models/db.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -8,6 +9,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final db = new DB();
   String email;
   String password;
   @override
@@ -64,8 +66,15 @@ class _LoginScreenState extends State<LoginScreen> {
             RoundedButton(
               title: 'Log in',
               colour: Colors.red[400],
-              onPressed: () {
-                Navigator.pushNamed(context, '/AllMoviesScreen');
+              onPressed: () async {
+                /* if (!snapshot.hasData) {
+                return Center(
+                child: CircularProgressIndicator(
+                backgroundColor: Colors.lightBlueAccent,
+                ),
+                );*/
+                db.logUser(email: email, password: password, context: context);
+                // Navigator.pushNamed(context, '/AllMoviesScreen');
               },
             ),
           ],

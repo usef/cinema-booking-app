@@ -7,11 +7,9 @@ class Seats extends StatefulWidget {
   Seats(
       {@required this.booked,
       @required this.userSeat,
-      @required this.userId,
       @required this.movieName});
   final List<int> booked;
   final List<int> userSeat;
-  final int userId;
   final String movieName;
   _SeatsState createState() => _SeatsState();
 }
@@ -22,7 +20,6 @@ class _SeatsState extends State<Seats> {
   List<int> booked = [];
   List<int> userSeat = [];
   List<int> newSeat = [];
-  int userId;
   String movie;
   Void SeateMaker() {
     setState(() {
@@ -62,7 +59,6 @@ class _SeatsState extends State<Seats> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    userId = widget.userId;
     movie = widget.movieName;
   }
 
@@ -73,6 +69,7 @@ class _SeatsState extends State<Seats> {
     SeateMaker();
     int h = 0;
     String avSeats = (47 - (booked.length + userSeat.length)).toString();
+
     return Column(
       children: [
         Card(
@@ -114,11 +111,13 @@ class _SeatsState extends State<Seats> {
               ),
               color: Colors.red,
               textColor: Colors.white,
-              onPressed: () {
+              onPressed: () async {
+                String loggedInUser = await db.getCurrentUser();
                 setState(() {
                   for (var x in newSeat) {
                     if (!booked.contains(x) && !userSeat.contains(x)) {
-                      db.book(seatId: x, userId: userId, movieName: movie);
+                      db.book(
+                          seatId: x, userId: loggedInUser, movieName: movie);
                     }
                   }
                   newSeat.clear();

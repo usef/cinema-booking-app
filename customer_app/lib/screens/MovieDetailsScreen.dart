@@ -8,7 +8,6 @@ const String MoviePic = 'https://i.ytimg.com/vi/MJuFdpVCcsY/movieposter_en.jpg';
 
 class MovieDetailsScreen extends StatelessWidget {
   final db = new DB();
-  final UserId = 1;
   @override
   Widget build(BuildContext context) {
     final dynamic MovieDetail = ModalRoute.of(context).settings.arguments;
@@ -133,8 +132,14 @@ class MovieDetailsScreen extends StatelessWidget {
                   final temp = snapshot.data.documents;
                   List<int> booked = [];
                   List<int> userSeats = [];
+                  String loggedInUser;
+                  asyncFunc() async {
+                    loggedInUser = await db.getCurrentUser();
+                  }
+
+                  asyncFunc();
                   for (var x in temp) {
-                    if (x.data['userId'] == UserId) {
+                    if (x.data['userId'] == loggedInUser) {
                       userSeats.add(x.data['seatId']);
                     } else
                       booked.add(x.data['seatId']);
@@ -142,7 +147,6 @@ class MovieDetailsScreen extends StatelessWidget {
                   return Seats(
                       booked: booked,
                       userSeat: userSeats,
-                      userId: UserId,
                       movieName: MovieDetail.title);
                 }),
           ],

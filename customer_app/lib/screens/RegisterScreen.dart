@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:customer_app/models/RoundedButton.dart';
 import 'package:customer_app/models/CustTextfield.dart';
+import 'package:common_packages/models/db.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -8,6 +9,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final db = new DB();
   String name;
   String email;
   String password;
@@ -75,8 +77,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
             RoundedButton(
               title: 'Register',
               colour: Colors.red[400],
-              onPressed: () {
-                Navigator.pushNamed(context, '/AllMoviesScreen');
+              onPressed: () async {
+                /* if (!snapshot.hasData) {
+                return Center(
+                child: CircularProgressIndicator(
+                backgroundColor: Colors.lightBlueAccent,
+                ),
+                );*/
+                db.AddUser(
+                    username: name,
+                    email: email,
+                    password: password,
+                    context: context);
               },
             ),
           ],

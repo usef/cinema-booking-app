@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:common_packages/models/Movie.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 class DB {
   final Firestore firestore = Firestore.instance;
 
@@ -66,7 +66,53 @@ class DB {
   Stream<QuerySnapshot> getSeats(id)  {
     return  seates.where('movieName', isEqualTo: id).snapshots();
   }
-// to do user part
 
-  // to do user part
+  Future<void> AddUser({String username, String email, String password , context})async{
+    try {
+      print(email);
+      print(password);
+      final newUser = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email.trim(), password: password);
+      if (newUser != null) {
+
+        Navigator.pushNamed(context, '/AllMoviesScreen');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
+  Future<void> logUser({String email, String password , context}) async{
+
+    try {
+      final user = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email.trim(), password: password);
+      if (user != null) {
+        Navigator.pushNamed(context, '/AllMoviesScreen');
+      }
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<dynamic> getCurrentUser() async {
+    String loggedInUser;
+    try {
+      final user = await FirebaseAuth.instance.currentUser();
+      if (user != null) {
+        loggedInUser = user.email;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return loggedInUser;
+  }
+
+  Future<void>logout() async{
+    await FirebaseAuth.instance.signOut();
+  }
+
+
 }

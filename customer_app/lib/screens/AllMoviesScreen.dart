@@ -12,7 +12,6 @@ class AllMoviesScreen extends StatefulWidget {
 
 class _AllMoviesScreenState extends State<AllMoviesScreen> {
   final db = new DB();
-
   // List<Movie> movies = new DB().getMovies();
 
   // List<Movie> movies = [
@@ -73,6 +72,7 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
           icon: Icon(Icons.arrow_back),
           color: Colors.red,
           onPressed: () {
+            db.logout();
             Navigator.pop(context);
           },
         ),
@@ -82,15 +82,17 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
           new Expanded(
             child: FutureBuilder<List<Movie>>(
               future: db.getMovies(),
-              builder: (BuildContext context, AsyncSnapshot<List<Movie>> snapshot){
-                if( snapshot.connectionState == ConnectionState.waiting){
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<Movie>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: Text('Please wait its loading...'));
-                }else{
+                } else {
                   if (snapshot.hasError)
                     return Center(child: Text('Error: ${snapshot.error}'));
                   else
                     return new ListView.builder(
-                        itemCount: snapshot.data == null ? 0 : snapshot.data.length,
+                        itemCount:
+                            snapshot.data == null ? 0 : snapshot.data.length,
                         itemBuilder: (context, i) {
                           return new FlatButton(
                             onPressed: null,
