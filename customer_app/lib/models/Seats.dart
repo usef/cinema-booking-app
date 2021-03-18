@@ -50,8 +50,6 @@ class _SeatsState extends State<Seats> {
                 } else {
                   newSeat.add(x);
                 }
-
-                print(x);
               });
             }
           },
@@ -119,8 +117,11 @@ class _SeatsState extends State<Seats> {
               onPressed: () {
                 setState(() {
                   for (var x in newSeat) {
-                    db.book(seatId: x, userId: userId, movieName: movie);
+                    if (!booked.contains(x) && !userSeat.contains(x)) {
+                      db.book(seatId: x, userId: userId, movieName: movie);
+                    }
                   }
+                  newSeat.clear();
                 });
               },
             ),
