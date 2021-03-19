@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:customer_app/models/RoundedButton.dart';
 import 'package:customer_app/models/CustTextfield.dart';
@@ -11,7 +12,31 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final db = new DB();
   String email;
+  String emailValMsg;
+  String passValMsg;
   String password;
+  String error;
+  bool validate(email, password) {
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+")
+        .hasMatch(email);
+    /*String pattern = r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$';
+    bool passwordValid = RegExp(pattern).hasMatch(password);*/
+    bool passwordValid = password.length >= 6 ? true : false;
+    if (emailValid && passwordValid) return true;
+    if (!emailValid) {
+      setState(() {
+        emailValMsg = 'Email Not Valid';
+      });
+    }
+    if (!passwordValid) {
+      setState(() {
+        passValMsg = 'Password Not Valid';
+      });
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 email = value;
               },
             ),
+            Text(emailValMsg == null ? '' : emailValMsg),
             SizedBox(
               height: 20.0,
             ),
@@ -63,24 +89,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 password = value;
               },
             ),
+            Text(passValMsg == null ? '' : passValMsg),
             RoundedButton(
-              title: 'Log in',
-              colour: Colors.red[400],
-              onPressed: () async {
-                /* if (!snapshot.hasData) {
+                title: 'Log in',
+                colour: Colors.red[400],
+                onPressed: () async {
+                  /* if (!snapshot.hasData) {
                 return Center(
                 child: CircularProgressIndicator(
                 backgroundColor: Colors.lightBlueAccent,
                 ),
                 );*/
-                db.logUser(email: email, password: password, context: context);
-                // Navigator.pushNamed(context, '/AllMoviesScreen');
-              },
-            ),
+                  if (validate(email, password)) {
+                    error = await db.logUser(
+                        email: email, password: password, context: context);
+                  }
+                }),
           ],
         ),
       ),
     );
-    ;
   }
 }
