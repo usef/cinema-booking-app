@@ -45,8 +45,6 @@ class DB {
         .catchError((e) => print('erorr $e'));
   }
 
-  // getMovie( movieID )
-
   Stream<QuerySnapshot> getMoviesStream() {
     return movies.snapshots();
   }
@@ -55,45 +53,29 @@ class DB {
     return seates.where('movieName', isEqualTo: id).snapshots();
   }
 
-  Future<void> AddUser({String email, String password , context})async{
+  Future<bool> AddUser({String email, String password})async{
     try {
-      print(email);
-      print(password);
       final newUser = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email.trim(), password: password);
       if (newUser != null) {
-
-        Navigator.pushNamed(context, '/AllMoviesScreen');
+        return true;
       }
     } catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }else {
-        print(e);
-      }
+      return false;
     }
   }
 
 
-  Future<String> logUser({String email, String password , context}) async{
+  Future<bool> logUser({String email, String password}) async{
 
     try {
       final user = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email.trim(), password: password);
+          email: email.trim(), password: password.trim());
       if (user != null) {
-        Navigator.pushNamed(context, '/AllMoviesScreen');
+        return true;
       }
-
     } catch (e) {
-      if (e.code == 'ERROR_USER_NOT_FOUND') {
-        return 'No user found for that email.';
-      } else if (e.code == 'ERROR_WRONG_PASSWORD') {
-        return'Wrong password provided for that user.';
-      }else {
-        return 'System Error Try Again Later';
-      }
+      return false;
     }
   }
 
