@@ -55,7 +55,7 @@ class DB {
     return seates.where('movieName', isEqualTo: id).snapshots();
   }
 
-  Future<void> AddUser({String username, String email, String password , context})async{
+  Future<void> AddUser({String email, String password , context})async{
     try {
       print(email);
       print(password);
@@ -66,12 +66,18 @@ class DB {
         Navigator.pushNamed(context, '/AllMoviesScreen');
       }
     } catch (e) {
-      print(e);
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }else {
+        print(e);
+      }
     }
   }
 
 
-  Future<void> logUser({String email, String password , context}) async{
+  Future<String> logUser({String email, String password , context}) async{
 
     try {
       final user = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -81,7 +87,13 @@ class DB {
       }
 
     } catch (e) {
-      print(e);
+      if (e.code == 'ERROR_USER_NOT_FOUND') {
+        return 'No user found for that email.';
+      } else if (e.code == 'ERROR_WRONG_PASSWORD') {
+        return'Wrong password provided for that user.';
+      }else {
+        return 'System Error Try Again Later';
+      }
     }
   }
 
@@ -101,6 +113,4 @@ class DB {
   Future<void>logout() async{
     await FirebaseAuth.instance.signOut();
   }
-
-
 }
