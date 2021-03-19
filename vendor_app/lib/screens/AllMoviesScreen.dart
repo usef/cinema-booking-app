@@ -67,7 +67,6 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
         backgroundColor: Colors.grey[800],
         foregroundColor: Colors.red,
         onPressed: () {
-          // Respond to button press
           addNewMovie();
         },
         child: Icon(Icons.add),
@@ -76,14 +75,7 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
   }
 
   void addNewMovie() {
-    // TODO:  Switch to AddMovieScreen
     print("Calling addNewMovie..");
-    // db.addMovie(
-    //     description: "MovieDetail",
-    //     img: "text cx img",
-    //     movieName: "text 77",
-    //     time: '47:11:00',
-    //     date: '10/5/2070');
     Navigator.pushNamed(context, '/AddMovieScreen');
   }
 }

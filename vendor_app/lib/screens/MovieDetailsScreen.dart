@@ -7,8 +7,14 @@ import 'package:common_packages/models/db.dart';
 
 const String MoviePic = 'https://i.ytimg.com/vi/MJuFdpVCcsY/movieposter_en.jpg';
 
-class MovieDetailsScreen extends StatelessWidget {
+class MovieDetailsScreen extends StatefulWidget {
+  @override
+  _MovieDetailsScreenState createState() => _MovieDetailsScreenState();
+}
+
+class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   final db = new DB();
+
   @override
   Widget build(BuildContext context) {
     final dynamic MovieDetail = ModalRoute.of(context).settings.arguments;
@@ -146,9 +152,16 @@ class MovieDetailsScreen extends StatelessWidget {
                   ),
                   color: Colors.red,
                   textColor: Colors.white,
-                  onPressed: () {
-                    db.deleteMovie(movieName: MovieDetail.title);
-                    Navigator.pop(context);
+                  onPressed: () async {
+                    bool deleted = await db.deleteMovie(movieName: MovieDetail.title);
+                    if(deleted) {
+                      Navigator.pop(context);
+                      // Navigator.pop(context);
+                      // Navigator.pushNamed(context, "/AllMoviesScreen").then((value) => {
+                      //   setState(() {})
+                      // });
+                      Navigator.pushReplacementNamed(context, "/AllMoviesScreen");
+                    } else print("There was an error deleting this movie");
                   },
                 ),
               ),
@@ -158,4 +171,5 @@ class MovieDetailsScreen extends StatelessWidget {
       ),
     );
   }
+
 }
