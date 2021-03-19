@@ -7,6 +7,39 @@ class Movie {
   String time;
   String date;
   Movie(this.title, this.description, this.pic, this.time, this.date);
+
+  static Widget moviesListBuilder(context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Center(child: CircularProgressIndicator());
+    } else {
+      if (snapshot.hasError)
+        return Center(child: Text('Error: ${snapshot.error}'));
+      else {
+        List snaps = snapshot.data.documents.map((e) => e.data).toList();
+        List<Movie> documents = toMovies(snaps);
+
+        return new ListView.builder(
+            itemCount: documents == null ? 0 : documents.length,
+            itemBuilder: (context, i) {
+              return new FlatButton(
+                onPressed: null,
+                child: new MovieCell(documents, i, context),
+                padding: EdgeInsets.all(0.0),
+                color: Colors.white,
+              );
+            });
+      }
+    }
+  }
+
+  static List<Movie> toMovies(list) {
+    List<Movie> result = [];
+    list.forEach((doc) => {
+      result.add(new Movie(doc["movieName"], doc["movieDescription"],
+          doc["img"], doc["time"], doc["date"]))
+    });
+    return result;
+  }
 }
 
 class MovieCell extends StatelessWidget {

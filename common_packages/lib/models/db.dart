@@ -51,22 +51,6 @@ class DB {
     return movies.snapshots();
   }
 
-  // Future<List<Movie>> getMovies() async {
-  //   final List<Movie> result = [];
-  //   final res =
-  //       await movies.getDocuments().then((QuerySnapshot querySnapshot) => {
-  //             querySnapshot.documents.forEach((doc) => {
-  //                   result.add(new Movie(
-  //                       doc.data["movieName"],
-  //                       doc.data["movieDescription"],
-  //                       doc.data["img"],
-  //                       doc.data["time"],
-  //                       doc.data["date"]))
-  //                 })
-  //           });
-  //   return result;
-  // }
-
   Stream<QuerySnapshot> getSeats(id) {
     return seates.where('movieName', isEqualTo: id).snapshots();
   }

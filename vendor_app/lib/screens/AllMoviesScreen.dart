@@ -37,32 +37,10 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
         children: <Widget>[
           new Expanded(
             child: StreamBuilder(
-                stream: db.getMoviesStream(),
-                builder: (context, snapshot) {
-                  List snaps = snapshot.data.documents.map((e) => e.data).toList();
-                  List<Movie> documents = toMovies(snaps);
-
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else {
-                    if (snapshot.hasError)
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    else
-                      return new ListView.builder(
-                          itemCount:
-                              documents == null ? 0 : documents.length,
-                          itemBuilder: (context, i) {
-                            return new FlatButton(
-                              onPressed: null,
-                              child: new MovieCell(documents, i, context),
-                              padding: EdgeInsets.all(0.0),
-                              color: Colors.white,
-                            );
-                          });
-                  }
-                },
-              ),
+              stream: db.getMoviesStream(),
+              builder: Movie.moviesListBuilder,
             ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -79,19 +57,5 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
   void addNewMovie() {
     print("Calling addNewMovie..");
     Navigator.pushNamed(context, '/AddMovieScreen');
-  }
-
-  List<Movie> toMovies(list) {
-    List<Movie> result = [];
-    list.forEach((doc) =>
-    {
-          result.add(new Movie(
-              doc["movieName"],
-              doc["movieDescription"],
-              doc["img"],
-              doc["time"],
-              doc["date"]))
-        });
-    return result;
   }
 }
