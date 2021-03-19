@@ -10,8 +10,8 @@ class DB {
   CollectionReference movies = Firestore.instance.collection('movies');
   CollectionReference seates = Firestore.instance.collection('seats');
 
-  void addMovie({Movie addedMovie}) {
-    movies
+  Future<bool> addMovie({Movie addedMovie}) async {
+    bool res = await movies
         .document(addedMovie.title)
         .setData({
           'movieName': addedMovie.title,
@@ -20,16 +20,18 @@ class DB {
           'movieDescription': addedMovie.description,
           'img': addedMovie.pic,
         })
-        .then((value) => print("added"))
-        .catchError((e) => print('failed cuz $e'));
+        .then((value) => true)
+        .catchError((e) => false);
+    return res;
   }
 
-  void deleteMovie({String movieName}) async {
-    return movies
+  Future<bool> deleteMovie({String movieName}) async {
+    bool res = await movies
         .document(movieName)
         .delete()
-        .then((value) => print("deleted"))
-        .catchError((e) => print('erorr $e'));
+        .then((value) => true)
+        .catchError((e) => false);
+    return res;
   }
 
   Future<void> book({userId, seatId, movieName}) {
@@ -45,21 +47,25 @@ class DB {
 
   // getMovie( movieID )
 
-  Future<List<Movie>> getMovies() async {
-    final List<Movie> result = [];
-    final res =
-        await movies.getDocuments().then((QuerySnapshot querySnapshot) => {
-              querySnapshot.documents.forEach((doc) => {
-                    result.add(new Movie(
-                        doc.data["movieName"],
-                        doc.data["movieDescription"],
-                        doc.data["img"],
-                        doc.data["time"],
-                        doc.data["date"]))
-                  })
-            });
-    return result;
+  Stream<QuerySnapshot> getMoviesStream() {
+    return movies.snapshots();
   }
+
+  // Future<List<Movie>> getMovies() async {
+  //   final List<Movie> result = [];
+  //   final res =
+  //       await movies.getDocuments().then((QuerySnapshot querySnapshot) => {
+  //             querySnapshot.documents.forEach((doc) => {
+  //                   result.add(new Movie(
+  //                       doc.data["movieName"],
+  //                       doc.data["movieDescription"],
+  //                       doc.data["img"],
+  //                       doc.data["time"],
+  //                       doc.data["date"]))
+  //                 })
+  //           });
+  //   return result;
+  // }
 
   Stream<QuerySnapshot> getSeats(id) {
     return seates.where('movieName', isEqualTo: id).snapshots();
