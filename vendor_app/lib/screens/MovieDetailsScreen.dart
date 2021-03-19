@@ -154,14 +154,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   textColor: Colors.white,
                   onPressed: () async {
                     bool deleted = await db.deleteMovie(movieName: MovieDetail.title);
-                    if(deleted) {
-                      Navigator.pop(context);
-                      // Navigator.pop(context);
-                      // Navigator.pushNamed(context, "/AllMoviesScreen").then((value) => {
-                      //   setState(() {})
-                      // });
-                      Navigator.pushReplacementNamed(context, "/AllMoviesScreen");
-                    } else print("There was an error deleting this movie");
+                    if(deleted) Navigator.pop(context);
+                    else print("There was an error deleting this movie");
                   },
                 ),
               ),
