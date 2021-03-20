@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Vendor App',
       theme: ThemeData(
-        primarySwatch: Colors.black,
+        primarySwatch: Colors.black, //text colors
         //accentColor: Colors.red[900],
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

@@ -15,11 +15,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/WelcomeScreen',
       theme: ThemeData(
-        accentColor: Colors.red[800],
-        primaryColor: Colors.black,
+        accentColor: Colors.white,
+        primaryColor: Colors.black, //text color
         //backgroundColor: Colors.black,
         scaffoldBackgroundColor: Colors.white,
         buttonColor: Colors.red[800],
+        bottomAppBarColor: Colors.red[800],
       ),
       routes: {
         '/WelcomeScreen': (context) => WelcomeScreen(),

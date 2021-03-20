@@ -32,7 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Flexible(
                   child: IconButton(
                       icon: Icon(
-                        Icons.camera_roll_outlined,
+                        Icons.video_collection,
                         size: 50,
                         color: Theme.of(context).buttonColor,
                       ),
@@ -45,7 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 30.0,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).buttonColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),

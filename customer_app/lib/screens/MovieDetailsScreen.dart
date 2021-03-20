@@ -16,9 +16,17 @@ class MovieDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dynamic MovieDetail = ModalRoute.of(context).settings.arguments;
-    return SingleChildScrollView(
-      child: Material(
-        color: Colors.grey[900],
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).bottomAppBarColor,
+        title: Text(MovieDetail.title),
+        centerTitle: true,
+      ),
+      // backgroundColor: Colors.grey[900],
+      body: SingleChildScrollView(
+        // child: Material(
+        //   color: Colors.grey[900],
         child: Column(
           children: [
             Stack(
@@ -26,36 +34,32 @@ class MovieDetailsScreen extends StatelessWidget {
                 Container(
                   height: 300,
                   width: double.infinity,
-                  child: Image(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(MovieDetail.pic),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(MovieDetail.pic),
+                    ),
                   ),
                 ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        color: Colors.white,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      Expanded(
-                        child: Text(
-                          MovieDetail.title,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  height: 100,
-                ),
+                // Container(
+                //   child: Row(
+                //     children: [
+                //       Expanded(
+                //         child: Text(
+                //           MovieDetail.title,
+                //           textAlign: TextAlign.center,
+                //           style: TextStyle(
+                //             color: Theme.of(context).primaryColor,
+                //             fontWeight: FontWeight.bold,
+                //             fontSize: 20.0,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                //   height: 100,
+                // ),
               ],
             ),
             Container(
@@ -64,7 +68,7 @@ class MovieDetailsScreen extends StatelessWidget {
                 MovieDetail.description,
                 style: TextStyle(
                   fontSize: 15,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -84,7 +88,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   child: Text(
                     'Movie Time',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),
@@ -93,7 +97,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   child: Text(
                     'Movie Date',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 )

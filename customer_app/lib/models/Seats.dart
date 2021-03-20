@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:customer_app/models/RoundedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:common_packages/models/db.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +28,7 @@ class _SeatsState extends State<Seats> {
         seats.clear();
       }
       for (int x = 0; x < 47; x++) {
-        Color colors = Colors.white;
+        Color colors = Theme.of(context).primaryColor;
         if (booked.contains(x)) {
           colors = Colors.red;
         } else if (userSeat.contains(x)) {
@@ -36,7 +37,7 @@ class _SeatsState extends State<Seats> {
           colors = Colors.blue;
         }
         seats.add(IconButton(
-          icon: Icon(Icons.amp_stories),
+          icon: Icon(Icons.event_seat),
           padding: EdgeInsets.all(0),
           color: colors,
           onPressed: () {
@@ -73,17 +74,22 @@ class _SeatsState extends State<Seats> {
     return Column(
       children: [
         Card(
+          color: Theme.of(context).buttonColor,
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
           child: ListTile(
             title: Text(
               'This Is The Screen',
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).accentColor),
             ),
             subtitle: Text(
               '$avSeats /47',
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).accentColor),
             ),
           ),
         ),
@@ -104,13 +110,9 @@ class _SeatsState extends State<Seats> {
         Center(
           child: Container(
             padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-            child: FlatButton(
-              child: Text(
-                'Book The Seats',
-                style: TextStyle(fontSize: 20.0),
-              ),
-              color: Theme.of(context).buttonColor,
-              textColor: Colors.white,
+            child: RoundedButton(
+              title: 'Book the seats',
+              colour: Theme.of(context).buttonColor,
               onPressed: () async {
                 String loggedInUser = await db.getCurrentUser();
                 setState(() {

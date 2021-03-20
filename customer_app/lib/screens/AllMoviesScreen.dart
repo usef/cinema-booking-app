@@ -18,7 +18,7 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.grey[800],
+        backgroundColor: Theme.of(context).bottomAppBarColor,
         title: Text(
           widget.title,
           textAlign: TextAlign.center,

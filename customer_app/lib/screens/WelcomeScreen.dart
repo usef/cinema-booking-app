@@ -13,12 +13,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Theme.of(context).bottomAppBarColor,
           bottomOpacity: 0,
           title: Center(
             child: Text(
               "Hello!",
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Theme.of(context).accentColor),
             ),
           )),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -31,9 +31,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Container(
               child: IconButton(
                   icon: Icon(
-                    Icons.camera_roll_outlined,
+                    Icons.video_collection,
                     size: 50,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).buttonColor,
                   ),
                   onPressed: null),
             ),
@@ -45,7 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 30.0,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).buttonColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -54,14 +54,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             RoundedButton(
               title: 'Log in',
-              colour: Theme.of(context).accentColor,
+              colour: Theme.of(context).buttonColor,
               onPressed: () {
                 Navigator.pushNamed(context, '/LoginScreen');
               },
             ),
             RoundedButton(
               title: 'Register',
-              colour: Theme.of(context).accentColor,
+              colour: Theme.of(context).buttonColor,
               onPressed: () {
                 Navigator.pushNamed(context, '/RegisterScreen');
               },

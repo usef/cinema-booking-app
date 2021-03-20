@@ -51,7 +51,7 @@ class MovieCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.grey[500],
+      color: Theme.of(context).buttonColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -69,6 +69,7 @@ class MovieCell extends StatelessWidget {
                 movies[i].title,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  color: Theme.of(context).accentColor,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -78,7 +79,7 @@ class MovieCell extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Material(
               borderRadius: BorderRadius.horizontal(left: Radius.circular(50)),
-              color: Theme.of(context).buttonColor,
+              color: Theme.of(context).primaryColor,
               child: Center(
                 child: FlatButton(
                   onPressed: () {
@@ -86,6 +87,7 @@ class MovieCell extends StatelessWidget {
                   },
                   child: Text(
                     "Details",
+                    style: TextStyle(color: Theme.of(context).accentColor),
                   ),
                 ),
               ),
