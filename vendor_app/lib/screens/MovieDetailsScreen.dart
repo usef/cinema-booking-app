@@ -18,9 +18,13 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final dynamic MovieDetail = ModalRoute.of(context).settings.arguments;
-    return SingleChildScrollView(
-      child: Material(
-        color: Colors.grey[900],
+    return Scaffold(
+      backgroundColor: Colors.grey[900],
+      appBar: AppBar(
+        title: Text(MovieDetail.title),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Stack(
@@ -32,31 +36,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     fit: BoxFit.fill,
                     image: NetworkImage(MovieDetail.pic),
                   ),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        color: Palette.secondaryColor,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      Expanded(
-                        child: Text(
-                          MovieDetail.title,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  height: 100,
                 ),
               ],
             ),

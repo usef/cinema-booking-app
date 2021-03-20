@@ -48,34 +48,14 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Padding(
-            //movie name string
-              padding: const EdgeInsets.all(50),
-              child: TextFormField(
-                decoration:
-                const InputDecoration(hintText: 'enter the movie name'),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "please enter a name";
-                  }
-                  addedMovie.title = value;
-                  return null;
-                },
-              )),
-          Padding(
-            // move des string
-              padding: const EdgeInsets.only(left: 50, right: 50),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                    hintText: 'enter the movie description'),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "please enter movie description";
-                  }
-                  addedMovie.description = value;
-                  return null;
-                },
-              )),
+          buildMovieInput(
+              text: "Enter movie name",
+              validator: validateMovieName,
+          ),
+          buildMovieInput(
+            text: "Enter movie description",
+            validator: validateMovieDescription,
+          ),
           SizedBox(
             height: 20,
           ),
@@ -134,44 +114,88 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                 "no image selected",
                 style: TextStyle(fontSize: 20),
               )
-                  : Image.file(_image)),
-          ElevatedButton(
-            child: Text("camera"),
-            onPressed: getImageByCamera,
+                  : Image.file(_image)
           ),
-          ElevatedButton(
-            child: Text("gallery"),
-            onPressed: getImageByGallery,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                child: Text("camera"),
+                onPressed: getImageByCamera,
+              ),
+              ElevatedButton(
+                child: Text("gallery"),
+                onPressed: getImageByGallery,
+              ),
+            ],
           ),
           // the next widget contains submit button and action
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: ElevatedButton(
                 onPressed: () async {
-                  // Validate will return true if the form is valid, or false if
-                  // the form is invalid.
-                  if (_addMovieFormKey.currentState.validate()) {
-                    // Process data.
-                    _timePickedToString = _timePicked.format(context);
-                    addedMovie.time = _timePickedToString;
-
-                    _datePickedToString = new DateFormat.yMMMd().format(_datePicked);
-                    addedMovie.date = _datePickedToString;
-
-                    if (_image != null) {
-                      String _uploadedImageUrl = await uploadImage(_image);
-                      addedMovie.pic = _uploadedImageUrl;
-                      bool added = await db.addMovie(addedMovie: addedMovie);
-                      if(added) Navigator.pop(context);
-                      else print("Error when adding movie");
-                    }
-                  }
+                  await processData(addedMovie);
                 },
                 child: Text('Submit'),
               )),
         ],
       ),
     );
+  }
+
+  validate() async {
+    if (_addMovieFormKey.currentState.validate()) {
+      _timePickedToString = _timePicked.format(context);
+      addedMovie.time = _timePickedToString;
+
+      _datePickedToString = new DateFormat.yMMMd().format(_datePicked);
+      addedMovie.date = _datePickedToString;
+
+      if (_image != null) {
+        String uploadedImageUrl = await uploadImage(_image);
+        addedMovie.pic = uploadedImageUrl;
+        return true;
+      }
+      return false;
+    }
+  }
+
+  submit(addedMovie) async {
+    return await db.addMovie(addedMovie: addedMovie) == true ? true: false;
+  }
+
+  processData(addedMovie) async {
+    bool valid = await validate();
+    if(valid != null && valid != false) {
+      bool result = await submit(addedMovie);
+      if (result)
+        Navigator.pop(context);
+      else
+        print("Adding error");
+    } else print("Validation error");
+  }
+
+  Padding buildMovieInput({ String text, validator}) {
+    return Padding(
+          //movie name string
+            padding: const EdgeInsets.all(50),
+            child: TextFormField(
+              decoration:
+              InputDecoration(hintText: text),
+              validator: validator,
+            ));
+  }
+
+  String validateMovieDescription(value) {
+    if (value.isEmpty) return "please enter movie description";
+    addedMovie.description = value;
+    return null;
+  }
+
+  String validateMovieName(value) {
+    if (value.isEmpty) return "please enter a name";
+    addedMovie.title = value;
+    return null;
   }
 
   Future getImageByCamera() async {
