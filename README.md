@@ -9,7 +9,8 @@ this project is built by @usef, @ahmedAshrefsw and @ku
 
 
 ## What you will find here ?
-* ### [Go to Project Screens](https://github.com/usef/cinema-booking-app#project-screenshots-)
+* ### [Check Project Screens](https://github.com/usef/cinema-booking-app#project-screenshots-)
+* ### [Check v0.1 Rrquirments and Features](https://github.com/usef/cinema-booking-app#v01-)
 
 ## Project Features/ Requirments 
   * ### v0.1 : 
