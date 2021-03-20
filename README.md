@@ -32,10 +32,10 @@ this project is built by @usef, @ahmedAshrefsw and @ku
 ## Project ScreenShots : 
   * ## v0.1 :
    * ### Welcome Screen v0.1  
-   * ![Welcome Screen v0.1](https://github.com/usef/cinema-booking-app/blob/main/Readme-imgs/welcome-screen-v0.png)
+   * ##![Welcome Screen v0.1](https://github.com/usef/cinema-booking-app/blob/main/Readme-imgs/welcome-screen-v0.png)
 
    * ### login Screen v0.1  
-   * ![login Screen v0.1](https://github.com/usef/cinema-booking-app/blob/main/Readme-imgs/login-v0.png)
+   * ##![login Screen v0.1](https://github.com/usef/cinema-booking-app/blob/main/Readme-imgs/login-v0.png)
 
    * ### allMovies Screen v0.1  
    * ![login Screen v0.1](https://github.com/usef/cinema-booking-app/blob/main/Readme-imgs/allMovies-v0.png)
