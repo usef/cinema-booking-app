@@ -26,7 +26,7 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.red,
+          color: Theme.of(context).buttonColor,
           onPressed: () {
             db.logout();
             Navigator.pop(context);

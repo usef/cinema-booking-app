@@ -109,7 +109,7 @@ class _SeatsState extends State<Seats> {
                 'Book The Seats',
                 style: TextStyle(fontSize: 20.0),
               ),
-              color: Colors.red,
+              color: Theme.of(context).buttonColor,
               textColor: Colors.white,
               onPressed: () async {
                 String loggedInUser = await db.getCurrentUser();

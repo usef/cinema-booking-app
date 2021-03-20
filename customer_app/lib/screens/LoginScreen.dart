@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       icon: Icon(
                         Icons.camera_roll_outlined,
                         size: 50,
-                        color: Colors.red[800],
+                        color: Theme.of(context).buttonColor,
                       ),
                       onPressed: null)),
               SizedBox(
@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   validator: user.validatePassword),
               RoundedButton(
                   title: 'Log in',
-                  colour: Colors.red[400],
+                  colour: Theme.of(context).buttonColor,
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
                       if (user.email != null && user.password != null) {

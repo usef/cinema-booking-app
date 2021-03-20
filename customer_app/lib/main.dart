@@ -17,8 +17,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         accentColor: Colors.red[800],
         primaryColor: Colors.black,
-        backgroundColor: Colors.black,
+        //backgroundColor: Colors.black,
         scaffoldBackgroundColor: Colors.white,
+        buttonColor: Colors.red[800],
       ),
       routes: {
         '/WelcomeScreen': (context) => WelcomeScreen(),

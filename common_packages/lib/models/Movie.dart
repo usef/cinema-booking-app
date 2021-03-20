@@ -35,9 +35,9 @@ class Movie {
   static List<Movie> toMovies(list) {
     List<Movie> result = [];
     list.forEach((doc) => {
-      result.add(new Movie(doc["movieName"], doc["movieDescription"],
-          doc["img"], doc["time"], doc["date"]))
-    });
+          result.add(new Movie(doc["movieName"], doc["movieDescription"],
+              doc["img"], doc["time"], doc["date"]))
+        });
     return result;
   }
 }
@@ -78,7 +78,7 @@ class MovieCell extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Material(
               borderRadius: BorderRadius.horizontal(left: Radius.circular(50)),
-              color: Colors.red,
+              color: Theme.of(context).buttonColor,
               child: Center(
                 child: FlatButton(
                   onPressed: () {

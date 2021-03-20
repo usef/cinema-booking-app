@@ -34,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       icon: Icon(
                         Icons.camera_roll_outlined,
                         size: 50,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).buttonColor,
                       ),
                       onPressed: null)),
               SizedBox(
@@ -70,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   validator: user.validatePassword),
               RoundedButton(
                 title: 'Register',
-                colour: Colors.red[400],
+                colour: Theme.of(context).buttonColor,
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     if (user.email != null && user.password != null) {
