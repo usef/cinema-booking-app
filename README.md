@@ -10,6 +10,7 @@ this project is built by @usef , @ahmedAshrefsw and @ku
 
 ## Project Features/ Requirments 
   * ### v0.1 : 
+  
     * #### Vendor App : 
       * Vendor Can see the All Movies recorded in the system once he opens the App 
       * Vendor can navigaate to Movie Deatail for any of the recorded movies from All Movies Screen 
