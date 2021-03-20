@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[800],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Form(
         key: _formKey,
         child: Padding(
@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       icon: Icon(
                         Icons.camera_roll_outlined,
                         size: 50,
-                        color: Colors.red,
+                        color: Colors.red[800],
                       ),
                       onPressed: null)),
               SizedBox(
@@ -77,7 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             email: user.email, password: user.password);
                         if (logged)
                           Navigator.pushNamed(context, '/AllMoviesScreen');
-                        else await ErrorScreen("Login Error").showMyDialog(context);
+                        else
+                          await ErrorScreen("Login Error")
+                              .showMyDialog(context);
                       }
                     }
                   }),

@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "common_packages",
+            "cwd": "common_packages",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "customer_app",
+            "cwd": "customer_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "vendor_app",
+            "cwd": "vendor_app",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}

@@ -19,8 +19,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[800],
       body: Form(
         key: _formKey,
         child: Padding(
@@ -34,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       icon: Icon(
                         Icons.camera_roll_outlined,
                         size: 50,
-                        color: Colors.red,
+                        color: Theme.of(context).accentColor,
                       ),
                       onPressed: null)),
               SizedBox(
@@ -45,7 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 30.0,
-                  color: Colors.red,
+                  color: Theme.of(context).accentColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -78,7 +78,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           email: user.email, password: user.password);
                       if (added)
                         Navigator.pushNamed(context, '/AllMoviesScreen');
-                      else await ErrorScreen("Registration Error").showMyDialog(context);
+                      else
+                        await ErrorScreen("Registration Error")
+                            .showMyDialog(context);
                     }
                   }
                 },

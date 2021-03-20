@@ -12,7 +12,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[800],
+      appBar: AppBar(
+          backgroundColor: Theme.of(context).accentColor,
+          bottomOpacity: 0,
+          title: Center(
+            child: Text(
+              "Hello!",
+              style: TextStyle(color: Colors.black),
+            ),
+          )),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -24,7 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   icon: Icon(
                     Icons.camera_roll_outlined,
                     size: 50,
-                    color: Colors.red,
+                    color: Theme.of(context).accentColor,
                   ),
                   onPressed: null),
             ),
@@ -36,7 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 30.0,
-                color: Colors.red,
+                color: Theme.of(context).accentColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -45,14 +54,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             RoundedButton(
               title: 'Log in',
-              colour: Colors.red,
+              colour: Theme.of(context).accentColor,
               onPressed: () {
                 Navigator.pushNamed(context, '/LoginScreen');
               },
             ),
             RoundedButton(
               title: 'Register',
-              colour: Colors.red[400],
+              colour: Theme.of(context).accentColor,
               onPressed: () {
                 Navigator.pushNamed(context, '/RegisterScreen');
               },

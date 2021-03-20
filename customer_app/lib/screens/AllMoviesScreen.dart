@@ -12,11 +12,11 @@ class AllMoviesScreen extends StatefulWidget {
 
 class _AllMoviesScreenState extends State<AllMoviesScreen> {
   final db = new DB();
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[800],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.grey[800],
         title: Text(
