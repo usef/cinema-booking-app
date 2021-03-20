@@ -62,11 +62,16 @@ class MovieCell extends StatelessWidget {
               image: NetworkImage(movies[i].pic),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(15),
-            child: Text(
-              movies[i].title,
-              style: TextStyle(fontWeight: FontWeight.bold),
+          Flexible(
+            child: Container(
+              padding: EdgeInsets.all(15),
+              child: Text(
+                movies[i].title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
           Container(
