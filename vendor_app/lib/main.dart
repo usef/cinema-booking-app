@@ -12,11 +12,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      color:Colors.red[800] ,
+      debugShowCheckedModeBanner: false,
       title: 'Vendor App',
       theme: ThemeData(
-        primarySwatch: Colors.black, //text colors
-        //accentColor: Colors.red[900],
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        accentColor: Colors.white,
+        primaryColor: Colors.black, //text color
+        //backgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.white,
+        buttonColor: Colors.red[800],
+        bottomAppBarColor: Colors.red[800],
       ),
       home: AllMoviesScreen(title: 'Vendor App'),
       initialRoute: '/AllMoviesScreen',
