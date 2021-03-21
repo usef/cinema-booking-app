@@ -1,7 +1,7 @@
 import 'package:customer_app/models/User.dart';
 import 'package:customer_app/screens/ErrorScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:customer_app/models/RoundedButton.dart';
+import 'package:common_packages/models/RoundedButton.dart';
 import 'package:customer_app/models/CustTextfield.dart';
 import 'package:common_packages/models/db.dart';
 

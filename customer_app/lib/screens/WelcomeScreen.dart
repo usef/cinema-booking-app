@@ -1,6 +1,6 @@
 import 'package:common_packages/models/db.dart';
 import 'package:flutter/material.dart';
-import 'package:customer_app/models/RoundedButton.dart';
+import 'package:common_packages/models/RoundedButton.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override

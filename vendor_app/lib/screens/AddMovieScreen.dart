@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:common_packages/models/db.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:common_packages/models/RoundedButton.dart';
 
 class AddMovieScreen extends StatefulWidget {
   @override
@@ -32,8 +33,10 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(" add movie "),
+        backgroundColor: Theme.of(context).bottomAppBarColor,
+        title: Text(" Add Movie "),
         centerTitle: true,
       ),
       body: Form(
@@ -49,34 +52,46 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           buildMovieInput(
-              text: "Enter movie name",
-              validator: validateMovieName,
+            text: "Enter movie name",
+            validator: validateMovieName,
           ),
           buildMovieInput(
             text: "Enter movie description",
             validator: validateMovieDescription,
           ),
-          SizedBox(
-            height: 20,
-          ),
+          // SizedBox(
+          //   height: 0,
+          // ),
           // the next row contains pick date button and the date display
           Row(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(left: 15),
-                child: ElevatedButton(
-                  child: Text("pick a date"),
-                  onPressed: () async {
-                    DateTime datePicked = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2020),
-                        lastDate: DateTime(2022));
-                    if (datePicked != null) _datePicked = datePicked;
+                  padding: EdgeInsets.only(left: 10),
+                  child: RoundedButton(
+                    title: "pick a date",
+                    colour: Theme.of(context).buttonColor,
+                    onPressed: () async {
+                      DateTime datePicked = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2020),
+                          lastDate: DateTime(2022));
+                      if (datePicked != null) _datePicked = datePicked;
+                    },
+                  )
+                  // child: ElevatedButton(
+                  //   child: Text("pick a date"),style: Theme.of(context).buttonColor,
+                  //   onPressed: () async {
+                  //     DateTime datePicked = await showDatePicker(
+                  //         context: context,
+                  //         initialDate: DateTime.now(),
+                  //         firstDate: DateTime(2020),
+                  //         lastDate: DateTime(2022));
+                  //     if (datePicked != null) _datePicked = datePicked;
 
-                  },
-                ),
-              ),
+                  //   },
+                  // ),
+                  ),
               Container(
                 padding: EdgeInsets.only(left: 10),
                 child: Text(new DateFormat.yMMMd().format(_datePicked) != null
@@ -89,14 +104,24 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
           Row(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(left: 15),
-                child: ElevatedButton(
-                  child: Text("pick a TIME"),
+                padding: EdgeInsets.only(left: 10),
+                child: RoundedButton(
+                  title: "Pick A Time",
+                  colour: Theme.of(context).buttonColor,
                   onPressed: () async {
-                    TimeOfDay timePicked = await showTimePicker(context: context, initialTime: TimeOfDay.now());
-                    if(timePicked != null) _timePicked = timePicked;
+                    TimeOfDay timePicked = await showTimePicker(
+                        context: context, initialTime: TimeOfDay.now());
+                    if (timePicked != null) _timePicked = timePicked;
                   },
                 ),
+                // child: ElevatedButton(
+                //   child: Text("pick a TIME"),
+                //   onPressed: () async {
+                //     TimeOfDay timePicked = await showTimePicker(
+                //         context: context, initialTime: TimeOfDay.now());
+                //     if (timePicked != null) _timePicked = timePicked;
+                //   },
+                // ),
               ),
               Container(
                 padding: EdgeInsets.only(left: 10),
@@ -111,32 +136,37 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
               width: 200,
               child: _image == null
                   ? Text(
-                "no image selected",
-                style: TextStyle(fontSize: 20),
-              )
-                  : Image.file(_image)
-          ),
+                      "no image selected",
+                      style: TextStyle(fontSize: 20),
+                    )
+                  : Image.file(_image)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                child: Text("camera"),
+              RoundedButton(
+                title: "camera",
+                colour: Theme.of(context).buttonColor,
                 onPressed: getImageByCamera,
               ),
-              ElevatedButton(
-                child: Text("gallery"),
+              SizedBox(
+                width: 5,
+              ),
+              RoundedButton(
+                title: "gallery",
+                colour: Theme.of(context).buttonColor,
                 onPressed: getImageByGallery,
               ),
             ],
           ),
           // the next widget contains submit button and action
           Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
+              padding: const EdgeInsets.only(top: 0),
+              child: RoundedButton(
+                title: 'Submit',
+                colour: Theme.of(context).buttonColor,
                 onPressed: () async {
                   await processData(addedMovie);
                 },
-                child: Text('Submit'),
               )),
         ],
       ),
@@ -161,29 +191,27 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
   }
 
   submit(addedMovie) async {
-    return await db.addMovie(addedMovie: addedMovie) == true ? true: false;
+    return await db.addMovie(addedMovie: addedMovie) == true ? true : false;
   }
 
   processData(addedMovie) async {
     bool valid = await validate();
-    if(valid != null && valid != false) {
+    if (valid != null && valid != false) {
       bool result = await submit(addedMovie);
       if (result)
         Navigator.pop(context);
       else
         print("Adding error");
-    } else print("Validation error");
+    } else
+      print("Validation error");
   }
 
-  Padding buildMovieInput({ String text, validator}) {
+  Padding buildMovieInput({String text, validator}) {
     return Padding(
-          //movie name string
-            padding: const EdgeInsets.all(50),
-            child: TextFormField(
-              decoration:
-              InputDecoration(hintText: text),
-              validator: validator,
-            ));
+        //movie name string
+        padding: const EdgeInsets.all(16),
+        child: TextFormField(
+            decoration: InputDecoration(hintText: text), validator: validator));
   }
 
   String validateMovieDescription(value) {
@@ -224,7 +252,8 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
   }
 
   Future<String> uploadImage(var imageFile) async {
-    StorageReference ref = FirebaseStorage.instance.ref().child("photo-${DateTime.now()}.jpg");
+    StorageReference ref =
+        FirebaseStorage.instance.ref().child("photo-${DateTime.now()}.jpg");
     StorageUploadTask uploadTask = ref.putFile(imageFile);
 
     var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
@@ -232,5 +261,4 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
 
     return url;
   }
-
 }
