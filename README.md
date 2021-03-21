@@ -42,11 +42,14 @@ this project is built by @usef, @ahmedAshrefsw and @ku
     |![login Screen v0.1](https://github.com/usef/cinema-booking-app/blob/main/Readme-imgs/allMovies-v0.png)|![login Screen v0.1](https://github.com/usef/cinema-booking-app/blob/main/Readme-imgs/movedetail-pt1-v0.png)|
     |lmovedetail-pt2 Screen v0.1|
     |![login Screen v0.1](https://github.com/usef/cinema-booking-app/blob/main/Readme-imgs/movedetail-pt2-v0.png)|
-    |Vendor add Movie Screen v0.1|    
+      
    
         
   * ## Vendor App v0.1 :
+    |Vendor add Movie Screen v0.1|
+    |-----------------------------------------------------------------------------------------------------------------|
     |[Vendor AddMocie Screen v0.1](https://github.com/usef/cinema-booking-app/blob/main/Readme-imgs/addmovie-v0.1.png)|
+    |-----------------------------------------------------------------------------------------------------------------|
       
      
 
