@@ -45,8 +45,8 @@ this project is built by @usef, @ahmedAshrefsw and @ku
         
    
   * ## Vendor App v0.1 :
-     |Vendor add Movie Screen v0.1|Vendor add Movie Screen v0.1|
-     |[Vendor AddMocie Screen v0.1](https://github.com/usef/cinema-booking-app/blob/main/Readme-imgs/addmovie-v0.1.png)|
+    |Vendor add Movie Screen v0.1|Vendor add Movie Screen v0.1|
+    |[Vendor AddMocie Screen v0.1](https://github.com/usef/cinema-booking-app/blob/main/Readme-imgs/addmovie-v0.1.png)|
       
      
 
